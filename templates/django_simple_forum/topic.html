@@ -14,7 +14,7 @@
 </div>
 
 <!-- Next/Prev page links  -->
-{% if posts.object_list and topics.paginator.num_pages > 1 %}
+{% if posts.object_list and posts.paginator.num_pages > 1 %}
 <div class="pagination">
     <span class="step-links">
         {% if posts.has_previous %}
