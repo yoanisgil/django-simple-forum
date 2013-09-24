@@ -16,8 +16,10 @@ Installation
 ===================
 
 Clone this repository and add it to your INSTALLED_APPS list then
-run ./manage.py migrate django_simple_forums to get the database
-schema setup on to your database.
+run:
+./manage.py migrate django_simple_forums 
+
+to get the database schema setup.
 
 Should you experience any issues do not hesistate to contact me
 
