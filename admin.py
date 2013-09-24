@@ -1,5 +1,5 @@
 from django.contrib import admin
-from forum.models import Forum, Topic, Post
+from django_simple_forum.models import Forum, Topic, Post
 
 class ForumAdmin(admin.ModelAdmin):
     pass

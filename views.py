@@ -10,15 +10,19 @@ from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator
 from django.core.context_processors import csrf
 
-from forum.models import Forum, Topic, Post
-from forum.forms import TopicForm, PostForm
+from django_simple_forum.models import Forum, Topic, Post
+from django_simple_forum.forms import TopicForm, PostForm
 
 from guest.decorators import guest_allowed, login_required
+
+from django.template import RequestContext
 
 def index(request):
     """Main listing."""
     forums = Forum.objects.all()
-    return render_to_response("forum/list.html", dict(forums=forums, user=request.user))
+    return render_to_response("django_simple_forum/list.html", {'forums': forums, 
+                                'user': request.user}, 
+                                context_instance=RequestContext(request))
 
 
 def add_csrf(request, ** kwargs):
@@ -42,14 +46,14 @@ def forum(request, forum_id):
     """Listing of topics in a forum."""
     topics = Topic.objects.filter(forum=forum_id).order_by("-created")
     topics = mk_paginator(request, topics, 20)
-    return render_to_response("forum/forum.html", add_csrf(request, topics=topics, pk=forum_id))
+    return render_to_response("django_simple_forum/forum.html", add_csrf(request, topics=topics, pk=forum_id))
 
 def topic(request, forum_id):
     """Listing of posts in a topic."""
     posts = Post.objects.filter(topic=forum_id).order_by("created")
     posts = mk_paginator(request, posts, 15)
     title = Topic.objects.get(pk=forum_id).title
-    return render_to_response("forum/topic.html", add_csrf(request, posts=posts, pk=forum_id,
+    return render_to_response("django_simple_forum/topic.html", add_csrf(request, posts=posts, pk=forum_id,
         title=title))
 
 @login_required
@@ -73,7 +77,7 @@ def post_reply(request, topic_id):
 
             return HttpResponseRedirect(reverse('topic-detail', args=(topic_id, )))
 
-    return render_to_response('forum/reply.html', {
+    return render_to_response('django_simple_forum/reply.html', {
             'form': form,
             'topic_id': topic_id,
         }, context_instance=RequestContext(request))
@@ -97,7 +101,7 @@ def new_topic(request, forum_id):
 
             return HttpResponseRedirect(reverse('forum-detail', args=(forum_id, )))
 
-    return render_to_response('forum/new-topic.html', {
+    return render_to_response('django_simple_forum/new-topic.html', {
             'form': form,
             'forum_id': forum_id,
         }, context_instance=RequestContext(request))
