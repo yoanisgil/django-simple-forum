@@ -65,12 +65,12 @@ def topic(request, topic_id):
 @login_required
 def post_reply(request, topic_id):
     form = PostForm()
+    topic = Topic.objects.get(pk=topic_id)
     
     if request.method == 'POST':
         form = PostForm(request.POST)
 
         if form.is_valid():
-            topic = Topic.objects.get(pk=topic_id)
 
             post = Post()
             post.topic = topic
@@ -81,11 +81,11 @@ def post_reply(request, topic_id):
 
             post.save()
 
-            return HttpResponseRedirect(reverse('topic-detail', args=(topic_id, )))
+            return HttpResponseRedirect(reverse('topic-detail', args=(topic.id, )))
 
     return render_to_response('django_simple_forum/reply.html', {
             'form': form,
-            'topic_id': topic_id,
+            'topic': topic,
         }, context_instance=RequestContext(request))
 
 @login_required
