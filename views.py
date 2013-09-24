@@ -17,6 +17,8 @@ from guest.decorators import guest_allowed, login_required
 
 from django.template import RequestContext
 
+from settings import *
+
 def index(request):
     """Main listing."""
     forums = Forum.objects.all()
@@ -45,7 +47,7 @@ def mk_paginator(request, items, num_items):
 def forum(request, forum_id):
     """Listing of topics in a forum."""
     topics = Topic.objects.filter(forum=forum_id).order_by("-created")
-    topics = mk_paginator(request, topics, 20)
+    topics = mk_paginator(request, topics, DJANGO_SIMPLE_FORUM_TOPICS_PER_PAGE)
 
     forum = get_object_or_404(Forum, pk=forum_id)
 
