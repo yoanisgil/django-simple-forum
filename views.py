@@ -46,7 +46,8 @@ def forum(request, forum_id):
     """Listing of topics in a forum."""
     topics = Topic.objects.filter(forum=forum_id).order_by("-created")
     topics = mk_paginator(request, topics, 20)
-    return render_to_response("django_simple_forum/forum.html", add_csrf(request, topics=topics, pk=forum_id))
+    return render_to_response("django_simple_forum/forum.html", add_csrf(request, topics=topics, pk=forum_id),
+                              context_instance=RequestContext(request))
 
 def topic(request, forum_id):
     """Listing of posts in a topic."""
@@ -54,7 +55,7 @@ def topic(request, forum_id):
     posts = mk_paginator(request, posts, 15)
     title = Topic.objects.get(pk=forum_id).title
     return render_to_response("django_simple_forum/topic.html", add_csrf(request, posts=posts, pk=forum_id,
-        title=title))
+        title=title), context_instance=RequestContext(request))
 
 @login_required
 def post_reply(request, topic_id):
