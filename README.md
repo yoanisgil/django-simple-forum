@@ -15,8 +15,8 @@ the tutorial together.
 Installation
 ===================
 
-Clone this repository and add it to your INSTALLED_APPS list then
-run:
+Clone this repository and add it to your INSTALLED_APPS list then run:
+
 ./manage.py migrate django_simple_forums 
 
 to get the database schema setup.
