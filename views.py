@@ -89,12 +89,12 @@ def post_reply(request, topic_id):
 @login_required
 def new_topic(request, forum_id):
     form = TopicForm()
+    forum = get_object_or_404(Forum, pk=forum_id)
     
     if request.method == 'POST':
         form = TopicForm(request.POST)
 
         if form.is_valid():
-            forum = Forum.objects.get(pk=forum_id)
 
             topic = Topic()
             topic.title = form.cleaned_data['title']
@@ -107,5 +107,5 @@ def new_topic(request, forum_id):
 
     return render_to_response('django_simple_forum/new-topic.html', {
             'form': form,
-            'forum_id': forum_id,
+            'forum': forum,
         }, context_instance=RequestContext(request))
