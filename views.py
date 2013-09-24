@@ -54,13 +54,13 @@ def forum(request, forum_id):
     return render_to_response("django_simple_forum/forum.html", add_csrf(request, topics=topics, pk=forum_id, forum=forum),
                               context_instance=RequestContext(request))
 
-def topic(request, forum_id):
+def topic(request, topic_id):
     """Listing of posts in a topic."""
-    posts = Post.objects.filter(topic=forum_id).order_by("created")
-    posts = mk_paginator(request, posts, 15)
-    title = Topic.objects.get(pk=forum_id).title
-    return render_to_response("django_simple_forum/topic.html", add_csrf(request, posts=posts, pk=forum_id,
-        title=title), context_instance=RequestContext(request))
+    posts = Post.objects.filter(topic=topic_id).order_by("created")
+    posts = mk_paginator(request, posts, DJANGO_SIMPLE_FORUM_REPLIES_PER_PAGE)
+    topic = Topic.objects.get(pk=topic_id)
+    return render_to_response("django_simple_forum/topic.html", add_csrf(request, posts=posts, pk=topic_id,
+        topic=topic), context_instance=RequestContext(request))
 
 @login_required
 def post_reply(request, topic_id):
