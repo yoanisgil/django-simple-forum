@@ -100,6 +100,7 @@ def new_topic(request, forum_id):
 
             topic = Topic()
             topic.title = form.cleaned_data['title']
+            topic.description = form.cleaned_data['description']
             topic.forum = forum
             topic.creator = request.user
 
