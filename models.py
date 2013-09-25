@@ -64,3 +64,10 @@ class Post(models.Model):
         return u"%s - %s\n%s" % (self.creator, self.title, self.created.strftime("%b %d, %I:%M %p"))
 
     short.allow_tags = True
+
+
+class ProfaneWord(models.Model):
+    word = models.CharField(max_length=60)
+
+    def __unicode__(self):
+        return self.word
