@@ -21,10 +21,6 @@ Clone this repository and add it to your INSTALLED_APPS list then run:
 
 to get the database schema setup.
 
-Should you experience any issues do not hesistate to contact me
-
-yoanis at 2burbujas dot net
-
-or just post an issue.
+Should you experience any issues do not hesistate to contact me at `gil.yoanis at gmail.com` or just file an issue.
 
 Cheers!
